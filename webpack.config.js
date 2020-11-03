@@ -1,5 +1,5 @@
 const path = require('path')
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
   // JavaScript 执行入口文件
@@ -14,20 +14,13 @@ module.exports = {
     rules: [
       {
         test: /\.css$/,
-        use: ExtractTextPlugin.extract({
-          fallback:{
-            loader:'style-loader',
-            options:{
-              //insert:"body",
-            }
-          },
-          use: ['css-loader'],
-        })
+        use: [MiniCssExtractPlugin.loader, 'css-loader'],
+        // use: ['style-loader', 'css-loader']
       }
     ]
   },
   plugins: [
-    new ExtractTextPlugin({
+    new MiniCssExtractPlugin({
       // 从 .js 文件中提取出来的 .css 文件的名称
       filename: `[name]_[contenthash:8].css`,
     })
